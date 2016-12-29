@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PWA Demo</title>
+</head>
+<body>
+    <p> \{^_^}/ hi! This's PWA Demo. </p>
+    <ul id="list"></ul>
+    <script>
+        const list = document.getElementById('list');
+        fetch('http://localhost:3000/people')
+        .then(res => {
+            return res.json();
+        })
+        .then(json => {
+            list.innerHTML = json
+                            .map(item => `<li>${item.name}</li>`)
+                            .join('');
+        })
+    </script>
+</body>
+</html>
