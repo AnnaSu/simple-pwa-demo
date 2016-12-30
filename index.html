@@ -8,6 +8,13 @@
     <p> \{^_^}/ hi! This's PWA Demo. </p>
     <ul id="list"></ul>
     <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js')
+            .then(reg => console.log('完成 SW 設定!', reg))
+            .catch(err => console.log('Error!', err));
+        }
+    </script>
+    <script>
         const list = document.getElementById('list');
         fetch('http://localhost:3000/people')
         .then(res => {
