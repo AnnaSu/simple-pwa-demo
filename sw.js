@@ -27,16 +27,15 @@ self.addEventListener('fetch', event => {
 	const dataUrl = 'http://localhost:3000';
 	console.log('now fetch!');
 
-	// 判斷 event.request.url 裡面有沒有包含 dataUrl
-	if (event.request.url.indexOf(dataUrl) === 0) {
-		event.respondWith(
-			new Promise ((resolve, reject) => {
-				setTimeout(() => {
-					resolve({data: 'test'});
-				},1000)
-			})
-		)
-	} else {
-
-	}
+	event.respondWith(
+		caches.match(event.request).then(function (response) {
+			return response || fetch(event.request).then(res => 
+				caches.open(dataCacheName)
+				.then(function(cache) {
+					cache.put(event.request, res.clone());
+					return res;
+				})
+			);
+		})
+	);
 });
