@@ -8,23 +8,24 @@
 </head>
 
 <body>
-    <div id="root">
-        <div data-reactroot="">
+    <div>
+        <div>
             <div>
                 <div>
                     <div>
-                        <header class="header"><img class="logo" src="./assets/logo_todo.png" alt="">
+                        <header class="header">
+                            <img class="logo" src="./assets/logo_todo.png" alt="">
                             <div class="header-unfinish">
-                                <span class="count">2</span>
+                                <span id="unfinishCount" class="count"></span>
                                 個未完成
                             </div>
                         </header>
                         <div class="input-content">
                             <img class="add" src="./assets/ic_add.png" alt="">
-                            <input type="text" class="input"placeholder="What need to be done?" value=""/>
+                            <input id="todoInput" type="text" class="input"placeholder="What need to be done?" value=""/>
                         </div>
                     </div>
-                    <ul>
+                    <ul id="todoList">
                     </ul>
                 </div>
             </div>
@@ -37,17 +38,7 @@
                 .catch(err => console.log('Error!', err));
         }
     </script>
-    <script>
-        const list = document.getElementById('list');
-        fetch('http://localhost:3000/people')
-            .then(res => {
-                return res.json();
-            })
-            .then(json => {
-                list.innerHTML = json
-                    .map(item => `<li>${item.name}</li>`)
-                    .join('');
-            })
+    <script src="./src/main.js">
     </script>
 </body>
 
