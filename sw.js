@@ -16,9 +16,23 @@ self.addEventListener('install', event => {
 	);
 });
 
-// // activate
+// activate
 self.addEventListener('activate', event => {
 	console.log('now ready to handle fetches!');
+	    event.waitUntil(
+			caches.keys().then(function(cacheNames) {
+				// cacheNames 是個 Array<String> 是一個 array 裡面的元素是 string
+				var promiseArr = cacheNames.map(function(item) {
+					// cacheNames.map => Array<Promise>
+					if (item !== cacheName) {
+						// Delete that cached file
+						console.log('[ServiceWorker] Removing Cached Files from Cache - ', item);
+						return caches.delete(item);
+					}
+				})
+				return Promise.all(promiseArr);
+			})
+	); // end event.waitUntil
 });
 
 // fetch
